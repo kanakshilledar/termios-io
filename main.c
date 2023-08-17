@@ -28,7 +28,7 @@ int main() {
     tty.c_cflag &= ~CSTOPB;         // clear stop field (only one is used)
     tty.c_cflag &= ~CSIZE;          // clear all size bits    
     tty.c_cflag |= CS8;             // 8 bits per byte (most common)
-    // tty.c_cflag &= ~CRTSCTS;     // disable RTS/CTS (hardware) flow control
+    // tty.c_cflag &= ~CRTSCTS;     // disable RTS/CTS (hardware) flow control (not for POSIX)
     tty.c_cflag |= CREAD | CLOCAL;  // turn on READ and ignore ctrl lines
 
     /* Setting Local Mode */
@@ -58,7 +58,7 @@ int main() {
     /* Saving tty settings */
     if (tcsetattr(pd, TCSANOW, &tty) != 0) {
         printf("Error %i: %s from tcsetattr\n", errno, strerror(errno));
-        return -1;
+        return 1;
     }
 
 
